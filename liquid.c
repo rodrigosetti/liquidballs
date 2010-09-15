@@ -11,15 +11,35 @@
     Author: Rodrigo Setti <rodrigosetti@gmail.com>
 */
 
-/* exercise the C interface */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <ode/ode.h>
 
+/******************************************************************************
+    SETTINGS SECTION: Probably this is the only section user needs to edit, 
+    but please feel free to modify this whole file at will(sorry about the mess)
+*******************************************************************************/
+
+/* Uncomment to show graphics */
 // #define GRAPHICS
+
+/* If graphics are enabled, uncomment to show boxes */
 // #define DRAW_BOXES
+
+/* Water sphere settings */
+#define NUM 2000        /* number of water spheres */
+#define RADIUS (0.05f)  /* water sphere radius */
+
+/* Box dimensions(where the water is pour into) */
+#define BOXW (6.0f)
+#define BOXH (6.0f)
+#define BOXD (0.1f)
+
+/* Simulation step size(in seconds) */
+#define STEP 0.05f
+
+/******************************************************************************/
 
 #ifdef GRAPHICS
 #include "drawstuff/drawstuff.h"
@@ -39,21 +59,8 @@
 
 #endif
 
-/* some constants */
-
-#define NUM 2000        /* number of spheres */
 #define MASS (1.0f)     /* mass of a box */
-#define RADIUS (0.05f)  /* sphere radius */
-
-/* Box dimensions(where the water is pour into) */
-#define BOXW (6.0f)
-#define BOXH (6.0f)
-#define BOXD (0.1f)
-
 #define C 10.0f
-
-/* Euler step size */
-#define STEP 0.05f
 
 /* dynamics and collision objects */
 
