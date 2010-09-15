@@ -11,14 +11,8 @@
 # Create images directory if it doesn't exists
 mkdir -p images
 
-# For each frame number with leading zeroes
-for N in $(seq -f'%04.0f' 1 3000); do
-
-    # test if file exists and abort if don't
-    if [ ! -e "data\/$N.dat" ]; then
-        echo "Data file data\/$N.dat not found. aborting." > /dev/stderr
-        break
-    fi
+# For each data file frame number
+for N in $(ls data/*.dat | sed 's/data\/\([0-9]\+\)\.dat/\1/' | sort); do
 
     # replace %FRAMEDATAFILENAME% placeholder in template with data filename
     # into a new file called frame.pov
