@@ -26,6 +26,7 @@ mkdir -p data
 # 3. Run render.sh script in order to render frames(images/$N.png)
 #    It takes very long! 24h in my laptop
 
+mkdir -p images
 sh render.sh
 
 # 4. Use a software to join image frames(i like ffmpeg):
