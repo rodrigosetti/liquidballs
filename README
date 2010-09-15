@@ -7,9 +7,10 @@
 #
 # Requires:
 #
-# * C compiler
+# * C compiler and Shell
 # * Open Dynamics Engine ODE(www.ode.org) library
 # * Povray for rendering frames
+# * Software to join images frames to movie(ffmpeg will do)
 #
 # How to:
 #
