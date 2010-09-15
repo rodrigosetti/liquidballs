@@ -1,0 +1,112 @@
+/**
+    This is a template povray file.
+    It renders a plane, sky and some number of water spheres(actually blobs)
+    in a realistic manner. Also, centers the camera at spheres mass center.
+
+    The placeholder %FRAMEDATAFILENAME% will be replaced with data file name
+    containing the number of spheres and all <x,y,z> positions by the render.sh
+    shell script.
+
+    Author: Rodrigo Setti <rodrigosetti@gmail.>
+*/
+#include "colors.inc"
+#include "textures.inc"
+
+background { color White }
+
+/* Sets light */
+light_source { <15, 10, -15> color White}
+
+/* Sets fog */
+fog {
+    distance 500
+    White
+}    
+
+/* Renders Sky */
+plane {
+    -y, -100
+
+    texture {
+        pigment { Blue_Sky scale 100 }
+    }
+
+    finish { ambient 1 }
+
+    no_shadow
+    no_reflection
+}
+
+/* Renders Ground */
+plane {
+    y, 0
+
+    texture {
+        pigment { color Gray75 }
+    }
+}
+
+/* Opens frame data file */
+#fopen frameData "%FRAMEDATAFILENAME%" read
+
+/* Reads particles numbers */
+#read (frameData, num_particles)
+
+#declare pos_sum = <0,0,0>;
+
+/*Read its position */
+#read (frameData, first_particle)
+
+#declare particle_pos = first_particle;
+
+blob {
+    threshold .9
+
+    /* For each particle... */
+    #while (defined(frameData))
+
+        /* Renders particle */
+        sphere {
+            particle_pos , .3, 1
+        }
+
+        #declare pos_sum = pos_sum + particle_pos;
+
+        /* Read its position */
+        #read (frameData, particle_pos)
+    #end
+
+    /* Water material */
+    material {
+        texture {
+            pigment {
+                color rgbt <1, 1, 1, 1>
+            }
+            finish {
+                ambient 0.0
+                diffuse 0.0
+
+                reflection {
+                    0.0, 1.0
+                fresnel on
+                }
+
+                specular 0.4
+                roughness 0.003
+            }           
+        }
+        interior {
+            ior 1.3
+        }
+    }
+    rotate x*-90
+}
+
+camera {
+    location <20, 5, -10>
+
+    look_at vrotate( (first_particle + (pos_sum/num_particles))/2, x*-90)
+}
+
+// Closes file
+#fclose frameData
