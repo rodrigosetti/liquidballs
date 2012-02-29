@@ -1,20 +1,18 @@
 #! /bin/sh
 #
-# Liquid-Balls:
-# Author: Rodrigo Setti <rodrigosetti@gmail.com>
-#
-# Liquid simulation by Monte Carlo Method:
+# Liquid-Balls
+# Liquid simulation by Monte Carlo Method
 #
 # Requires:
 #
 # * C compiler and Shell
-# * Open Dynamics Engine ODE(www.ode.org) library
+# * Open Dynamics Engine ODE (www.ode.org) library
 # * Povray for rendering frames
-# * Software to join images frames to movie(ffmpeg will do)
+# * Software to join images frames to movie (ffmpeg will do)
 #
 # How to:
 #
-# 1. Compile liquid.c(physics simulation)
+# 1. Compile liquid.c (physics simulation)
 #
 
 make liquid
@@ -24,13 +22,13 @@ make liquid
 mkdir -p data
 ./liquid
 
-# 3. Run render.sh script in order to render frames(images/$N.png)
+# 3. Run render.sh script in order to render frames (images/$N.png)
 #    It takes very long! 24h in my laptop
 
 mkdir -p images
 sh render.sh
 
-# 4. Use a software to join image frames(i like ffmpeg):
+# 4. Use a software to join image frames (e.g. ffmpeg):
 
 ffmpeg -i images/%04.png -o liquid.avi
 
